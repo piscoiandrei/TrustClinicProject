@@ -1,0 +1,122 @@
+.hover-blue:hover {
+    color: #0023c4;
+}
+
+/*for some reason it doesn't work with some media queries,
+it decreases instead of increasing*/
+.hover-inc:hover {
+    font-size: 110%;
+}
+
+.hover-pink:hover {
+    color: #ff5cf4;
+}
+
+.blue {
+    color: #0023c4;
+}
+
+.pink {
+    color: #ff5cf4;
+}
+
+.bg-blue {
+    background-color: #0023c4;
+}
+
+.bg-pink {
+    background-color: #ff5cf4;
+}
+
+
+.txt-md {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 16px;
+}
+
+.txt-lg {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 22px;
+}
+
+.txt-xl {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 30px;
+}
+
+.logo-text {
+    font-family: "Comfortaa", cursive;
+    font-size: 40px;
+}
+
+@media (min-width: 576px) {
+    .txt-md {
+        font-size: 16px;
+    }
+
+    .txt-lg {
+        font-size: 23px;
+    }
+
+    .txt-xl {
+        font-size: 30px;
+    }
+
+    .hover-inc:hover {
+        font-size: 110%;
+    }
+}
+
+@media (min-width: 768px) {
+    .txt-md {
+        font-size: 17px;
+    }
+
+    .txt-lg {
+        font-size: 24px;
+    }
+
+    .txt-xl {
+        font-size: 31px;
+    }
+
+    .hover-inc:hover {
+        font-size: 110%;
+    }
+}
+
+@media (min-width: 992px) {
+    .txt-md {
+        font-size: 18px;
+    }
+
+    .txt-lg {
+        font-size: 25px;
+    }
+
+    .txt-xl {
+        font-size: 32px;
+    }
+
+    .hover-inc:hover {
+        font-size: 110%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .txt-md {
+        font-size: 20px;
+    }
+
+    .txt-lg {
+        font-size: 29px;
+    }
+
+    .txt-xl {
+        font-size: 36px;
+    }
+
+    .hover-inc:hover {
+        font-size: 110%;
+    }
+}

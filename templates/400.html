@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/404.css' %}">
+    {% include 'header_links.html' %}
+    <link rel="icon" href="{% static 'images/LOGO.svg' %}">
+    <title>T.C. | Bad request</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="margin-top: 8rem;">
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <img src="{% static 'images/LOGO.svg' %}" alt="logo" class="img-res">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <div class="col-12">
+                <div class="d-flex justify-content-center font normal-text">
+                    An error occured.
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-1">
+
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <div class="font normal-text">
+                    Visit the home page by following
+                    <!-- HOME PAGE LINK -->
+                    <span class="font-weight-bold"><a href="#"> this link. </a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% include 'script_links.html' %}
+</body>
+</html>

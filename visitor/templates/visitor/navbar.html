@@ -1,0 +1,33 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="z-index: 10;">
+    <div class="container">
+    <a class="navbar-brand" href="{% url 'visitor:home' %}">
+      <img src="{% static 'images/LOGO.svg' %}" width="55" height="55" class="d-inline-block align-top"
+           alt="" loading="lazy">
+      <span class="logo-text">
+         <span class="hover-blue">TRUST CLINIC</span>
+      </span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse txt-lg" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+          <a class="nav-link active" href="{% url 'visitor:login_redirect' %}">
+              <span class="hover-blue hover-inc">Services</span>
+          </a>
+            <a class="nav-link active" href="{% url 'visitor:login_redirect' %}">
+              <span class="hover-blue hover-inc">Clinics</span>
+          </a>
+          <a class="nav-link active" href="{% url 'visitor:login_redirect' %}">
+              <span class="hover-blue hover-inc">Doctors</span>
+            </a>
+          <a class="nav-link active" href="{% url 'visitor:login_redirect' %}">
+            <span class="hover-blue hover-inc">Login</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>

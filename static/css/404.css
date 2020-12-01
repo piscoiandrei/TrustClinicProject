@@ -1,0 +1,56 @@
+.font {
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+.normal-text {
+    font-size: 18px;
+}
+
+.img-res {
+    width: 200px;
+    height: 200px;
+}
+
+@media (min-width: 576px) {
+    .normal-text {
+        font-size: 16px;
+    }
+
+    .img-res {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (min-width: 768px) {
+    .normal-text {
+        font-size: 17px;
+    }
+
+    .img-res {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (min-width: 992px) {
+    .normal-text {
+        font-size: 18px;
+    }
+
+    .img-res {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .normal-text {
+        font-size: 20px;
+    }
+
+    .img-res {
+        width: 350px;
+        height: 350px;
+    }
+}
