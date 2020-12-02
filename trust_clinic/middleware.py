@@ -2,15 +2,17 @@ from django.conf import settings
 from django.urls import resolve
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
+from generic.models import FooterData
 
 
 class FooterDynamicData(MiddlewareMixin):
 
     # context_data should be added from a model, which is not defined yey
     def process_template_response(self, request, response):
-        response.context_data['main_phone'] = '07n-amcartela'
-        response.context_data['company_email'] = 'some@mail'
-        response.context_data['creator_link'] = 'boss.com'
+        f = FooterData.objects.values()[0]
+        response.context_data['main_phone'] = f['phone']
+        response.context_data['company_email'] = f['company_email']
+        response.context_data['creator_link'] = f['creator_link']
         return response
 
 
