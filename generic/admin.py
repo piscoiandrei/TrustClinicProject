@@ -1,6 +1,9 @@
 from django.contrib import admin
 from .models import FooterData, EmailService
 
+admin.site.site_header = "Trust Clinic"
+admin.site.index_title = "Adminsitration"
+admin.site.site_title = "T.C."
 
 class FooterDataAdmin(admin.ModelAdmin):
     model = FooterData
