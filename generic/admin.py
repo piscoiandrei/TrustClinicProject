@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import FooterData, EmailService
+from .models import FooterData
 
 admin.site.site_header = "Trust Clinic"
 admin.site.index_title = "Adminsitration"
 admin.site.site_title = "T.C."
+
 
 class FooterDataAdmin(admin.ModelAdmin):
     model = FooterData
@@ -22,22 +23,3 @@ class FooterDataAdmin(admin.ModelAdmin):
 
 
 admin.site.register(FooterData, FooterDataAdmin)
-
-
-class EmailServiceAdmin(admin.ModelAdmin):
-    model = EmailService
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def get_actions(self, request):
-        actions = super().get_actions(request)
-        if 'delete_selected' in actions:
-            del actions['delete_selected']
-        return actions
-
-
-admin.site.register(EmailService, EmailServiceAdmin)

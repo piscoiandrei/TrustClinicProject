@@ -14,12 +14,3 @@ class FooterData(models.Model):
     def __str__(self):
         return 'Footer Data'
 
-
-class EmailService(models.Model):
-    email_host = models.CharField(max_length=200)
-    email_port = models.CharField(max_length=200)
-    email_host_user = models.CharField(max_length=200)
-    email_host_password = models.CharField(max_length=200)
-
-    def __str__(self):
-        return 'Email service settings'
