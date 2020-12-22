@@ -7,7 +7,6 @@ from generic.models import FooterData
 
 class FooterDynamicData(MiddlewareMixin):
 
-    # context_data should be added from a model, which is not defined yey
     def process_template_response(self, request, response):
         f = FooterData.objects.values()[0]
         response.context_data['main_phone'] = f['phone']
