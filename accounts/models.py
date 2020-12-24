@@ -76,10 +76,11 @@ class User(AbstractBaseUser, PermissionsMixin):
                f"personal_id={self.personal_id}, " \
                f"date_joined={self.date_joined}, " \
                f"is_active={self.is_active}, " \
+               f"is_client={self.is_client}, " \
                f"is_operator={self.is_operator}, " \
                f"is_doctor={self.is_doctor}, " \
                f"is_staff={self.is_staff}, " \
-               f"is_superuser={self.is_superuser},)"
+               f"is_superuser={self.is_superuser})"
 
     @property
     def full_name(self):
