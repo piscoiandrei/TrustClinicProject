@@ -13,3 +13,10 @@ class Message(models.Model):
     content = models.CharField(max_length=255, blank=True, null=True)
 
     objects = MessageManager()
+
+    def __str__(self):
+        return 'From {} to {} : {}'.format(
+            self.source.email,
+            self.endpoint.email,
+            self.content[:31]
+        )
