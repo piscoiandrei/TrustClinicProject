@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'visitor',
     'generic',
     'chat',
+    'client',
+    'doctor',
 
     # installed
     'bootstrap_admin',
@@ -103,10 +105,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-# in developement
+# auth
 IGNORE_URL_NAMES = [
     'visitor:home',
 ]
+LOGIN_REDIRECT_URL = '/accounts/home/'
+LOGIN_URL = 'accounts/login/'
 
 STATIC_URL = '/static/'
 

@@ -12,7 +12,7 @@ def redirect_home(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', redirect_home),
-    path('visitor/', include('visitor.urls'))
+    path('visitor/', include('visitor.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('chat/', include('chat.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
