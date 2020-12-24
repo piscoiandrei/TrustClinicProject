@@ -1,0 +1,28 @@
+.my-msg{
+    border-radius: 15px 10px 0px 10px;
+    background-color: #ff5cf4;
+}
+
+.your-msg{
+    border-radius: 10px 15px 10px 0px;
+    background-color: #0023c4;
+}
+
+.msg-box{
+    min-height: 70px;
+    width: 100%;
+    padding:10px;
+    border-radius: 10px 10px 10px 10px;
+    border: solid;
+    border-color: #0023c4;
+    background-color: #f6f8ff;
+    border-width: 0px 0px 0px 10px;
+}
+
+div.msg-box:hover{
+    background-color: #e5eafd;
+}
+div.msg-box:active{
+    background-color: #0023c4;
+    color: white;
+}
