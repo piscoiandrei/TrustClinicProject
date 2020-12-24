@@ -15,8 +15,8 @@ class MessageManager(models.Manager):
         return self.filter(source=user1, endpoint=user2)
 
     def from_to_email(self, email1, email2):
-        user1 = get_object_or_404(User, pk=id1)
-        user2 = get_object_or_404(User, pk=id2)
+        user1 = get_object_or_404(User, pk=email1)
+        user2 = get_object_or_404(User, pk=email2)
         return self.filter(source=user1, endpoint=user2)
 
     def create_from_to_obj(self, user1, user2, content):
