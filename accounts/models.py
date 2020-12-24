@@ -37,6 +37,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text='Designates whether this user should be treated as active. '
                   'Unselect this instead of deleting accounts.'
     )
+    is_client = models.BooleanField(
+        default=False,
+        verbose_name='operator status',
+        help_text='A non-staff user with the client status.'
+    )
     is_operator = models.BooleanField(
         default=False,
         verbose_name='operator status',

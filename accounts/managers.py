@@ -46,6 +46,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_client(self, email, password):
+        """
+        Creates and saves a client user with the given email and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.is_client = True
+        user.save(using=self._db)
+        return user
+
     def create_operator(self, email, password):
         """
         Creates and saves an operator user with the given email and password.
@@ -69,3 +81,4 @@ class UserManager(BaseUserManager):
         user.is_doctor = True
         user.save(using=self._db)
         return user
+
