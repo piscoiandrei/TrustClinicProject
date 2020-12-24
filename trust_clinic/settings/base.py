@@ -22,6 +22,7 @@ INSTALLED_APPS = [
 
     # installed
     'bootstrap_admin',
+    'channels',
 
     # default
     'django.contrib.admin',
@@ -94,6 +95,17 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.Argon2PasswordHasher',
 ]
+
+# ASGI CONFIG
+ASGI_APPLICATION = 'trust_clinic.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 LANGUAGE_CODE = 'en-us'
 
