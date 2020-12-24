@@ -23,7 +23,7 @@ class Login(LoginView):
                     reverse_lazy('doctor:dashboard'))
             if user.is_staff or user.is_superuser:
                 return redirect(resolve_url('/admin/'))
-            else:
+            if user.is_client:
                 return redirect(
                     reverse_lazy('client:dashboard'))
         else:
