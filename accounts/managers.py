@@ -109,6 +109,7 @@ class UserManager(BaseUserManager):
             last_name=last_name,
             phone=phone,
         )
+        user.is_active = False
         user.is_operator = True
         user.save(using=self._db)
         return user

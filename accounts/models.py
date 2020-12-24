@@ -34,8 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(
         default=True,
         verbose_name='active status',
-        help_text='Designates whether this user should be treated as active. '
-                  'Unselect this instead of deleting accounts.'
+        help_text='Unselect this if you are creating an operator user'
     )
     is_client = models.BooleanField(
         default=False,
