@@ -17,7 +17,7 @@ class UserAdminCustom(UserAdmin):
     list_display = ('email', 'full_name', 'date_joined')
     list_filter = ('is_active', 'is_operator', 'is_doctor',
                    'is_staff', 'is_superuser', 'groups')
-    search_fields = ('email', 'first_name', 'last_name', 'personal_id')
+    search_fields = ('id', 'email', 'first_name', 'last_name', 'personal_id')
     ordering = ('email', 'date_joined')
     filter_horizontal = ('groups', 'user_permissions',)
 
