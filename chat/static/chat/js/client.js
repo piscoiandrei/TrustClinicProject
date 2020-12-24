@@ -1,3 +1,22 @@
+let k = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/listener/'
+)
+k.addEventListener('open', sendData)
+k = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/activator/'
+)
+k.addEventListener('open', sendData)
+
+currentUser = JSON.stringify({
+    'id': document.getElementById("id").innerText,
+})
+
+function sendData(e) {
+    console.dir(e)
+    e.target.send(currentUser)
+}
+
+
 let chat = document.getElementById("chatBox")
 let input = document.getElementById("inputBox")
 input.addEventListener('keyup', submitText)
@@ -15,8 +34,7 @@ function submitText(e) {
         if (text != '') {
             if (text.includes('1')) {
                 chat.innerHTML += (myMsg + text + closingTags)
-            }
-            else {
+            } else {
                 chat.innerHTML += (yourMsg + text + closingTags)
             }
             input.value = ''

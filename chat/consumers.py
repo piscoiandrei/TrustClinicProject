@@ -5,24 +5,26 @@ from channels.generic.websocket import WebsocketConsumer
 
 class Listener(WebsocketConsumer):
     def connect(self):
-        pass
+        self.accept()
 
     def disconnect(self, close_code):
         pass
 
     def receive(self, text_data=None, bytes_data=None):
-        pass
+        data = json.loads(text_data)
+        print(f'Listener----- {data}')
 
 
 class Activator(WebsocketConsumer):
     def connect(self):
-        pass
+        self.accept()
 
     def disconnect(self, close_code):
         pass
 
     def receive(self, text_data=None, bytes_data=None):
-        pass
+        data = json.loads(text_data)
+        print(f'Activatorr----- {data}')
 
 
 class ChatHandler(WebsocketConsumer):
