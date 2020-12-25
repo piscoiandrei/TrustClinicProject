@@ -1,17 +1,32 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.shortcuts import redirect
-from django.urls import path, include
+from django.shortcuts import redirect, resolve_url
+from django.urls import path, include, reverse_lazy
 
 
-def redirect_home(request):
-    return redirect('visitor:home')
+def _redirect(request):
+    user = request.user
+
+    if user.is_authenticated:
+        if user.is_operator:
+            return redirect(
+                reverse_lazy('chat:operator', kwargs={'pk': user.id}))
+        if user.is_doctor:
+            return redirect(
+                reverse_lazy('doctor:dashboard'))
+        if user.is_staff or user.is_superuser:
+            return redirect(resolve_url('/admin/'))
+        if user.is_client:
+            return redirect(
+                reverse_lazy('client:dashboard'))
+    else:
+        return redirect('visitor:home')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', redirect_home),
+    path('', _redirect),
     path('visitor/', include('visitor.urls')),
     path('accounts/', include('accounts.urls')),
     path('chat/', include('chat.urls')),
