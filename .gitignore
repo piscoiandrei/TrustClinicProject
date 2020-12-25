@@ -2,3 +2,4 @@
 staticfiles/**
 vcs.xml
 db.sqlite3
+generic.json
