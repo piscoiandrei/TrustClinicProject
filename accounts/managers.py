@@ -1,3 +1,4 @@
+import secrets
 from django.contrib.auth.models import BaseUserManager
 
 
@@ -54,19 +55,16 @@ class UserManager(BaseUserManager):
 
     # Creates and saves a superuser with the given data
     def create_superuser(self,
-                         first_name,
-                         last_name,
-                         phone,
                          email=None,
                          password=None,
                          personal_id=None):
         user = self.create_user(
             email=email,
             password=password,
-            personal_id=personal_id,
-            first_name=first_name,
-            last_name=last_name,
-            phone=phone,
+            personal_id=str(secrets.randbits(32)),
+            first_name='SUPERUSER',
+            last_name='superuser',
+            phone=str(secrets.randbits(32)),
         )
         user.is_staff = True
         user.is_superuser = True

@@ -34,11 +34,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(
         default=True,
         verbose_name='active status',
-        help_text='Unselect this if you are creating an operator user'
+        help_text='Designates whether this user should be treated as active. '
+                  'Unselect this instead of deleting accounts.'
+    )
+    is_connected = models.BooleanField(
+        default=False,
+        verbose_name='connection status',
+        help_text='Describes the connection status of an user.'
     )
     is_client = models.BooleanField(
         default=False,
-        verbose_name='operator status',
+        verbose_name='client status',
         help_text='A non-staff user with the client status.'
     )
     is_operator = models.BooleanField(
@@ -75,6 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                f"personal_id={self.personal_id}, " \
                f"date_joined={self.date_joined}, " \
                f"is_active={self.is_active}, " \
+               f"is_connected={self.is_connected}, " \
                f"is_client={self.is_client}, " \
                f"is_operator={self.is_operator}, " \
                f"is_doctor={self.is_doctor}, " \

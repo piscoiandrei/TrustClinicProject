@@ -14,8 +14,9 @@ class UserAdminCustom(UserAdmin):
     change_password_form = AdminPasswordChangeForm
     readonly_fields = ['date_joined']
     list_display = ('email', 'full_name', 'date_joined')
-    list_filter = ('is_active', 'is_operator', 'is_doctor',
-                   'is_staff', 'is_superuser', 'groups')
+    list_filter = (
+        'is_active', 'is_connected', 'is_client', 'is_operator', 'is_doctor',
+        'is_staff', 'is_superuser', 'groups')
     search_fields = ('id', 'email', 'first_name', 'last_name', 'personal_id')
     ordering = ('email', 'date_joined')
     filter_horizontal = ('groups', 'user_permissions',)
@@ -31,7 +32,7 @@ class UserAdminCustom(UserAdmin):
             'fields': ('personal_id',)
         }),
         ('Permissions', {
-            'fields': ('is_active', 'is_operator',
+            'fields': ('is_active', 'is_connected', 'is_client', 'is_operator',
                        'is_doctor', 'is_staff', 'is_superuser',
                        # the PermissionMixins
                        'groups', 'user_permissions')
@@ -44,7 +45,7 @@ class UserAdminCustom(UserAdmin):
                 'last_name', 'phone', 'personal_id')
         }),
         ('Permissions', {
-            'fields': ('is_active', 'is_operator',
+            'fields': ('is_active', 'is_connected', 'is_client', 'is_operator',
                        'is_doctor', 'is_staff', 'is_superuser',
                        'groups', 'user_permissions')
         })
