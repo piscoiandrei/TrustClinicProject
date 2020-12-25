@@ -16,6 +16,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/staticfiles/admin" />
       <excludeFolder url="file://$MODULE_DIR$/staticfiles/images" />
+      <excludeFolder url="file://$MODULE_DIR$/staticfiles" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (trust_clinic)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
