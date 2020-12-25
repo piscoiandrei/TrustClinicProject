@@ -1,3 +1,31 @@
+/*
+ ACTIVATOR Websocket
+ */
+let activator = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/activator/'
+)
+activator.addEventListener('error', activatorErrorHandler)
+activator.addEventListener('close', activatorClose)
+activator.addEventListener('open', activatorOpen)
+
+function activatorOpen(e){ console.log('The activator ws just opened')}
+function activatorClose(e){ console.log('The activator ws just closed')}
+function activatorErrorHandler(e) {
+    // leave balnk for now
+    // ideas:
+    //https://stackoverflow.com/questions/3780511/reconnection-of-client-when-server-reboots-in-websocket
+    console.log('an error occured in the activator WS')
+}
+/*
+
+ */
+/*
+LISTENER WebSocket
+ */
+//let listener = new WebSocket('')
+/*
+
+ */
 let chat = document.getElementById("chatBox")
 let input = document.getElementById("inputBox")
 input.addEventListener('keyup', submitText)
@@ -15,8 +43,7 @@ function submitText(e) {
         if (text != '') {
             if (text.includes('1')) {
                 chat.innerHTML += (myMsg + text + closingTags)
-            }
-            else {
+            } else {
                 chat.innerHTML += (yourMsg + text + closingTags)
             }
             input.value = ''

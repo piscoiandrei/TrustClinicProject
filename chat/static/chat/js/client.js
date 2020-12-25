@@ -1,20 +1,34 @@
-let k = new WebSocket(
+currentUserId = document.getElementById("id").innerText
+/*
+LISTENER WebSocket
+ */
+let listener = new WebSocket(
     'ws://' + window.location.host + '/ws/chat/listener/'
 )
-k.addEventListener('open', sendData)
-k = new WebSocket(
-    'ws://' + window.location.host + '/ws/chat/activator/'
-)
-k.addEventListener('open', sendData)
+listener.addEventListener('open', sendData)
+listener.addEventListener('message', receivedData)
 
-currentUser = JSON.stringify({
-    'id': document.getElementById("id").innerText,
-})
 
 function sendData(e) {
-    console.dir(e)
-    e.target.send(currentUser)
+    let data_to_send = {
+        'id': currentUserId,
+    }
+    e.target.send(JSON.stringify(data_to_send))
 }
+
+function receivedData(e) {
+    const data = JSON.parse(e.data)
+    console.log('the listener received data')
+    if (data['endpoint'] == currentUserId) {
+        if (data['available'] == 'false') {
+            addYourMessage('No operators available for now.')
+        }
+    }
+}
+
+/*
+
+ */
 
 
 let chat = document.getElementById("chatBox")
@@ -47,6 +61,14 @@ function submitText(e) {
         }
 
     }
+}
+
+function addYourMessage(msg) {
+    chat.innerHTML += (yourMsg + msg + closingTags)
+}
+
+function addMyMessage(msg) {
+    chat.innerHTML += (myMsg + msg + closingTags)
 }
 
 function addMessageBox(userId) {
