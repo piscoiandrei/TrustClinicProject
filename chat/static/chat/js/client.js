@@ -49,12 +49,14 @@ function listenerMessage(e) {
         /*
         Chat Handler
         */
-        console.log(data);
-        currentSource = data['client']
-        currentEndpoint = data['operator']
+        //console.log(data);
+        currentSource = data['client'];
+        currentEndpoint = data['operator'];
 
+        //console.log(currentSource);
+        //console.log(currentEndpoint);
         chatHandler = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + data['chat_id'] + '/'
+            'ws://' + window.location.host + '/ws/chat/' + data['client']['chat_id'] + '/'
         );
         chatHandler.addEventListener("open", chatHandlerOpen);
         chatHandler.addEventListener("message", chatHandlerMessage);
@@ -64,13 +66,18 @@ function listenerMessage(e) {
 }
 
 function chatHandlerOpen(e) {
+    console.log(e.target.url)
     console.log('the chat handler just opened');
 }
 
 function chatHandlerMessage(e) {
     console.log('the chat handler just received a message');
 
-    const data = JSON.parse(e.data)
+    const data = JSON.parse(e.data);
+
+    if (data['endpoint'] === 'close')
+        chatHandler.close();
+
     // received my own message from the server, now we display it
     if (data['source']['id'] === currentSource['id']) {
         addMyMessage(data['message']);
@@ -86,6 +93,7 @@ function chatHandlerMessage(e) {
 }
 
 function chatHandlerClose(e) {
+    addYourMessage('The connection expired or the operator closed the chat.')
     console.log('the chat handler just closed');
 }
 
@@ -110,7 +118,7 @@ function submitText(e) {
                         'message': text,
                     }
                 )
-            )
+            );
             // we are going to display the message when we receive it back from
             // the server, so we know for sure that it has been sent
         }
