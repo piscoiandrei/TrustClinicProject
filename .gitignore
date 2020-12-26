@@ -1,5 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 staticfiles/**
 vcs.xml
-db.sqlite3
 generic.json
