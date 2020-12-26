@@ -7,7 +7,16 @@ let listener = new WebSocket(
 )
 listener.addEventListener('open', sendData)
 listener.addEventListener('message', receivedData)
+listener.addEventListener('close', listenerClose)
+listener.addEventListener('error', listenerError)
 
+function listenerClose(e) {
+    console.log('the listener ws just closed')
+}
+
+function listenerError(e) {
+    console.log('an error occurred in the listener ws')
+}
 
 function sendData(e) {
     let data_to_send = {
@@ -19,10 +28,13 @@ function sendData(e) {
 function receivedData(e) {
     const data = JSON.parse(e.data)
     console.log('the listener received data')
-    if (data['endpoint'] == currentUserId) {
-        if (data['available'] == 'false') {
+    if (data['available'] === 'false') {
+        if (data['endpoint'] === currentUserId) {
             addYourMessage('No operators available for now.')
         }
+    }
+    else if(data['available']==='true'){
+        console.log(data)
     }
 }
 

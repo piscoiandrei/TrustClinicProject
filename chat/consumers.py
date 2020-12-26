@@ -55,7 +55,7 @@ class Listener(WebsocketConsumer):
         self.accept()
 
     def disconnect(self, close_code):
-        # remove the ws from the group
+        # remove the channel from the group
         async_to_sync(self.channel_layer.group_discard)(
             'listener',
             self.channel_name,
@@ -63,19 +63,47 @@ class Listener(WebsocketConsumer):
 
     # receive message from websocket
     def receive(self, text_data=None, bytes_data=None):
+        """
+        Only the websocket from the client-side will send messages,
+        so we don't need to check if the scpoe['user'] is client/operator
+        """
         data = json.loads(text_data)
         connected_operators = User.objects.filter(is_connected=True)
         if not connected_operators:
             async_to_sync(self.channel_layer.group_send)(
                 'listener',
-                {
+                {  # type = the method that will be called
+                    # when data is received from the group
                     'type': 'listener_data',
                     'available': 'false',
                     'source': data['id'],
                 }
             )
         else:
-            pass
+
+            operator = connected_operators[
+                random.randint(0, len(connected_operators) - 1)]
+            client = get_object_or_404(User, email=self.scope['user'])
+            async_to_sync(self.channel_layer.group_send)(
+                'listener',
+                {
+                    'type': 'listener_data',
+                    'available': 'true',
+                    'operator': {
+                        'id': operator.id,
+                        'fullname': operator.full_name,
+                        'email': operator.email,
+                        'chat_id': client.id,
+                    },
+                    'client': {
+                        'id': client.id,
+                        'fullname': client.full_name,
+                        'email': client.email,
+                        'phone': client.phone,
+                        'chat_id': client.id,
+                    }
+                }
+            )
 
     # receive data from group
     def listener_data(self, event):
@@ -85,8 +113,23 @@ class Listener(WebsocketConsumer):
                 'available': 'false',
                 'endpoint': event['source'],
             }))
-        else:
-            pass
+        elif available == 'true':
+            self.send(text_data=json.dumps({
+                'available': 'true',
+                'operator': {
+                    'id': event['operator']['id'],
+                    'fullname': event['operator']['fullname'],
+                    'email': event['operator']['email'],
+                    'chat_id': event['operator']['chat_id'],
+                },
+                'client': {
+                    'id': event['client']['id'],
+                    'fullname': event['client']['fullname'],
+                    'email': event['client']['email'],
+                    'phone': event['client']['phone'],
+                    'chat_id': event['client']['chat_id'],
+                }
+            }))
 
 
 class ChatHandler(WebsocketConsumer):
