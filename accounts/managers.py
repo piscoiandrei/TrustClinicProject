@@ -62,8 +62,8 @@ class UserManager(BaseUserManager):
             email=email,
             password=password,
             personal_id=str(secrets.randbits(32)),
-            first_name='SUPERUSER',
-            last_name='superuser',
+            first_name='SUPER',
+            last_name='USER',
             phone=str(secrets.randbits(32)),
         )
         user.is_staff = True
