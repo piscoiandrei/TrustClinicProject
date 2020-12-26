@@ -6,49 +6,41 @@
 {% block body %}
     {% include 'client_navbar.html' %}
 
-    <div class="container-fluid" style="max-width: 1580px!important;">
-        <div class="row">
-            <div class="col-3 border"
-                 style="height: 84vh; overflow-y: auto;" id="left-col">
-                <!-- message boxes will be added here by the js-->
-            </div>
-            <div class="col-9">
-                <div class="container">
 
-                    <!-- the chat box -->
-                    <div class="container bg-white border shadow"
-                         style="height: 80vh; overflow-y: auto;" id="chatBox">
-                        <!-- User info-->
-                        <div class="row shadow-sm pb-2 pt-2">
-                            <div class="col-6 border-right">
-                                <img src="{% static 'chat/img/operator_human.png' %}"
-                                     style="height: 24px;">
-                                <span class="txt-md text-left"
-                                      id="fullnameSpan">
+    <div class="container">
+
+        <!-- the chat box -->
+        <div class="container bg-white border shadow"
+             style="height: 80vh; overflow-y: auto;" id="chatBox">
+            <!-- User info-->
+            <div class="row shadow-sm pb-2 pt-2">
+                <div class="col-6 border-right">
+                    <img src="{% static 'chat/img/operator_human.png' %}"
+                         style="height: 24px;">
+                    <span class="txt-md text-left"
+                          id="fullnameSpan">
                                     Operator fullname
                                 </span>
-                            </div>
-                            <div class="col-6">
+                </div>
+                <div class="col-6">
                                 <span class="txt-md text-left" id="emailSpan">
                                     operator email
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="text" class="form-control"
-                                   placeholder="Ask a question here..."
-                                   id="inputBox"
-                                   maxlength="255">
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-12">
+                <input type="text" class="form-control"
+                       placeholder="Ask a question here..."
+                       id="inputBox"
+                       maxlength="255">
+            </div>
+        </div>
+
     </div>
+
     <span id="id" style="display:none;">{{ user.id }}</span>
     {% include 'footer.html' %}
     <script src="{% static 'chat/js/client.js' %}"></script>

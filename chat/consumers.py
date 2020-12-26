@@ -134,12 +134,38 @@ class Listener(WebsocketConsumer):
 
 class ChatHandler(WebsocketConsumer):
     def connect(self):
-        # gets the user_id from routing.py
-        # self.scope['url_route']['kwargs']['user_id']
-        pass
+        # gets the chat_id from routing.py
+        # self.scope['url_route']['kwargs']['chat_id']
+
+        self.chat_group_name = self.scope['url_route']['kwargs']['chat_id']
+
+        async_to_sync(self.channel_layer.group_add)(
+            self.chat_group_name,
+            self.channel_name,
+        )
+        self.accept()
 
     def disconnect(self, close_code):
-        pass
+        async_to_sync(self.channel_layer.group_discard)(
+            self.chat_group_name,
+            self.channel_name,
+        )
 
     def receive(self, text_data=None, bytes_data=None):
-        pass
+        data = json.loads(text_data)
+        async_to_sync(self.channel_layer.group_send)(
+            self.chat_group_name,
+            {
+                'type': 'chat_message',
+                'source': data['source'],
+                'endpoint': data['endpoint'],
+                'message': data['message'],
+            }
+        )
+
+    def chat_message(self, event):
+        self.send(text_data=json.dumps({
+            'source': event['source'],
+            'endpoint': event['endpoint'],
+            'message': event['message'],
+        }))
