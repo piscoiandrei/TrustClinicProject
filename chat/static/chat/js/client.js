@@ -1,126 +1,111 @@
-let currentUserId = document.getElementById("id").innerText;
-let chatHandler;
+function p(text, value) {
+    console.log(text);
+    console.log(value);
+}
+
 let chat = document.getElementById("chatBox");
 let input = document.getElementById("inputBox");
 input.addEventListener('keyup', submitText);
 
-let currentSource = {}
-let currentEndpoint = {}
+let chatHandler;
+let source = {
+    'email': document.getElementById('email').innerText,
+    'full_name': document.getElementById('full_name').innerText,
+};
+let endpoint;
+p('Current source', source)
 
 const myMsg = '<div class="row pt-2"><div class="col-12"><p class="pt-1 pb-1 pl-2 pr-2 text-white float-right shadow-sm txt-sm my-msg">';
 const yourMsg = '<div class="row pt-2"><div class="col-12"><p class="pt-1 pb-1 pl-2 pr-2 text-white float-left shadow-sm txt-sm your-msg">';
 const closingTags = '</p></div></div></div>';
 /*
-LISTENER WebSocket
+Chat Handler
  */
-let listener = new WebSocket(
-    'ws://' + window.location.host + '/ws/chat/listener/'
+chatHandler = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/'
 );
-listener.addEventListener('open', listenerSendData);
-listener.addEventListener('message', listenerMessage);
-listener.addEventListener('close', listenerClose);
-listener.addEventListener('error', listenerError);
+p('Chat handler: ', chatHandler)
+chatHandler.addEventListener('open', startChat);
+chatHandler.addEventListener('message', listenChat);
 
-function listenerClose(e) {
-    console.log('the listener ws just closed');
-}
-
-function listenerError(e) {
-    console.log('an error occurred in the listener ws');
-}
-
-function listenerSendData(e) {
-    let data_to_send = {
-        'id': currentUserId,
+function startChat(e) {
+    let data = {
+        'action': 'init',
+        'source': source,
     };
-    e.target.send(JSON.stringify(data_to_send));
+    p('Data sent: ', data)
+    chatHandler.send(JSON.stringify(data));
 }
 
-function listenerMessage(e) {
+function listenChat(e) {
     const data = JSON.parse(e.data);
-    console.log('the listener received data');
-    if (data['available'] === 'false') {
-        if (data['endpoint'] === currentUserId) {
-            input.disabled = true;
-            addYourMessage('No operators available for now. Try again later.');
+    console.log('-------------------Receiver Data------------------- ')
+    p('Current source: ', source);
+    p('Current endpoint: ', endpoint);
+    p('Data received: ', data);
+    if (data['action'] === 'unavailable') {
+        // checking if the request source is this websocket
+        if (data['source']['email'] === source['email']) {
+            if (!('endpoint' in data)) {
+                input.disabled = true;
+                addYourMessage('<i>No operatos available.</i>');
+            }
         }
-    } else if (data['available'] === 'true') {
-        //opening a chat handler with the given data if an operator is available
-        /*
-        Chat Handler
-        */
-        //console.log(data);
-        currentSource = data['client'];
-        currentEndpoint = data['operator'];
+    } else if (data['action'] === 'init') {
+        // checking if the request source is this websocket
+        if (data['source']['email'] === source['email']) {
+            if ('endpoint' in data) {
+                endpoint = data['endpoint'];
+                document.querySelector('#fullnameSpan').textContent = endpoint['full_name'];
+                document.querySelector('#emailSpan').textContent = endpoint['email'];
+                addYourMessage('Hello, how can I help you?');
+            }
+        }
+    } else if (data['action'] === 'close') {
+        if (source['email'] === data['endpoint_email']) {
+            addYourMessage('<i>This chat has been closed.</i>');
+            input.disabled = true;
+            chatHandler.close();
+        } else if (endpoint['email'] === data['endpoint_email']) {
+            addYourMessage('<i>This chat has been closed.</i>');
+            input.disabled = true;
+            chatHandler.close();
+        }
+    } else if (data['action'] === 'message') {
+        // checking if the message is FROM me
+        // so it will only appear after the servers echos it back
+        // to the corresponding consumers
+        // this way we know for sure that the server received the message
+        if (data['source']['email'] === source['email']) {
+            addMyMessage(data['message']);
+        }
 
-        //console.log(currentSource);
-        //console.log(currentEndpoint);
-        chatHandler = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + data['client']['chat_id'] + '/'
-        );
-        chatHandler.addEventListener("open", chatHandlerOpen);
-        chatHandler.addEventListener("message", chatHandlerMessage);
-        chatHandler.addEventListener("close", chatHandlerClose);
-        chatHandler.addEventListener("error", chatHandlerError);
+
+        // checking if the message is for me
+        if (data['endpoint']['email'] === source['email']) {
+            // checking if the message is sent from the correct source
+            if (data['source']['email'] === endpoint['email']) {
+                addYourMessage(data['message']);
+            }
+        }
     }
 }
-
-function chatHandlerOpen(e) {
-    console.log(e.target.url)
-    console.log('the chat handler just opened');
-}
-
-function chatHandlerMessage(e) {
-    console.log('the chat handler just received a message');
-
-    const data = JSON.parse(e.data);
-
-    if (data['endpoint'] === 'close')
-        chatHandler.close();
-
-    // received my own message from the server, now we display it
-    if (data['source']['id'] === currentSource['id']) {
-        addMyMessage(data['message']);
-        input.value = '';
-        chat.scrollTop = chat.scrollHeight;
-    }
-    if (data['endpoint']['id'] === currentSource['id']) {
-        addYourMessage(data['message']);
-        input.value = '';
-        chat.scrollTop = chat.scrollHeight;
-    }
-
-}
-
-function chatHandlerClose(e) {
-    addYourMessage('The connection expired or the operator closed the chat.')
-    console.log('the chat handler just closed');
-}
-
-function chatHandlerError(e) {
-    console.log('an error occurred in the chat handler');
-}
-
-/*
-
- */
 
 // THE INPUT BOX
 function submitText(e) {
     if (e.keyCode === 13) {
         let text = input.value;
         if (text !== '') {
-            chatHandler.send(
-                JSON.stringify(
-                    {
-                        'source': currentSource,
-                        'endpoint': currentEndpoint,
-                        'message': text,
-                    }
-                )
-            );
-            // we are going to display the message when we receive it back from
-            // the server, so we know for sure that it has been sent
+            console.log('-------------------Sender data------------------- ')
+            let to_send = {
+                'action': 'message',
+                'source': source,
+                'endpoint': endpoint,
+                'message': text,
+            }
+            chatHandler.send(JSON.stringify(to_send));
+            p('Data sent: ', to_send);
+            input.value = '';
         }
 
     }

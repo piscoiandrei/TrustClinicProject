@@ -10,38 +10,32 @@
             <div class="col-3 border"
                  style="height: 98vh; overflow-y: auto;" id="left-col">
                 <div class="border-bottom pt-3">
-                    <span class="txt-md text-left"
-                                      id="fullnameSpan">
-                        Incoming Messages
+                    <span class="txt-md text-left">
+                        Active Chats
                     </span>
                 </div>
                 <!-- message boxes will be added here by the js-->
             </div>
             <div class="col-9">
                 <div class="container">
+                    <div class="row shadow-sm pb-2 pt-2">
 
-                    <!-- the chat box -->
-                    <div class="container bg-white border shadow"
-                         style="height: 96vh; overflow-y: auto;" id="chatBox">
-                        <!-- User info-->
-                        <div class="row shadow-sm pb-2 pt-2">
-                            <div class="col-4 border-right">
+                        <div class="col-6 border-right">
                                 <span class="txt-md text-left"
                                       id="fullnameSpan">
-                                    client fullname
+                                    -
                                 </span>
-                            </div>
-                            <div class="col-4 border-right">
-                                <span class="txt-md text-left" id="emailSpan">
-                                    client mail
-                                </span>
-                            </div>
-                            <div class="col-4">
-                                <span class="text-sm text-left" id="phoneSpan">
-                                    client phone
-                                </span>
-                            </div>
                         </div>
+                        <div class="col-6">
+                                <span class="txt-md text-left" id="emailSpan">
+                                    -
+                                </span>
+                        </div>
+                    </div>
+                    <!-- the chat box -->
+                    <div class="container bg-white border shadow"
+                         style="height: 90vh; overflow-y: auto;" id="chatBox">
+                        <!-- Messages-->
                     </div>
 
                     <div class="row">
@@ -58,7 +52,8 @@
         </div>
     </div>
     <p class="txt-xl ml-5"> add a logout view, which redirects to login</p>
-    <span id="id" style="display:none;">{{ user.id }}</span>
+    <span id="email" style="display:none;">{{ user.email }}</span>
+    <span id="full_name" style="display:none;">{{ user.full_name }}</span>
     {% include 'copyright.html' %}
     <script src="{% static 'chat/js/operator.js' %}"></script>
     {% include 'script_links.html' %}

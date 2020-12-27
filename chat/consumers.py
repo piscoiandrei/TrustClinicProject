@@ -1,5 +1,6 @@
 import json
 import random
+import logging
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
@@ -10,23 +11,21 @@ from django.shortcuts import get_object_or_404
 # database_sync_to_async is not needed yet, because
 # the code is written synchronously
 
+logger = logging.getLogger(__name__)
 User = get_user_model()
+logstr = 'LOG  :::  '
 
 
-def set_connection(operator_id, bool_value):
-    operator = get_object_or_404(User, pk=int(operator_id))
+def set_connection(email, bool_value):
+    operator = get_object_or_404(User, email=email)
 
     if not operator.is_operator:
         raise ImproperlyConfigured(
             "The Operator should always have is_operator=True")
 
     operator.is_connected = bool_value
+    logger.info(logstr + 'Operator state: ' + repr(operator))
     operator.save()
-
-
-def get_user_by_email(email) -> int:
-    user = get_object_or_404(User, email=email)
-    return user.id
 
 
 class Activator(WebsocketConsumer):
@@ -39,133 +38,137 @@ class Activator(WebsocketConsumer):
         """
         self.scope['user'] returns a unique identifier, in this case the email
         """
-        set_connection(get_user_by_email(self.scope['user']), True)
+        logger.info(
+            logstr + 'Activator is connecting: ' + self.scope['user'].email)
+        set_connection(self.scope['user'].email, True)
         self.accept()
 
     def disconnect(self, code):
-        set_connection(get_user_by_email(self.scope['user']), False)
-
-
-class Listener(WebsocketConsumer):
-    def connect(self):
-        async_to_sync(self.channel_layer.group_add)(
-            'listener',  # group name
-            self.channel_name
-        )
-        self.accept()
-
-    def disconnect(self, close_code):
-        # remove the channel from the group
-        async_to_sync(self.channel_layer.group_discard)(
-            'listener',
-            self.channel_name,
-        )
-
-    # receive message from websocket
-    def receive(self, text_data=None, bytes_data=None):
-        """
-        Only the websocket from the client-side will send messages,
-        so we don't need to check if the scpoe['user'] is client/operator
-        """
-        data = json.loads(text_data)
-        connected_operators = User.objects.filter(is_connected=True)
-        if not connected_operators:
-            async_to_sync(self.channel_layer.group_send)(
-                'listener',
-                {  # type = the method that will be called
-                    # when data is received from the group
-                    'type': 'listener_data',
-                    'available': 'false',
-                    'source': data['id'],
-                }
-            )
-        else:
-
-            operator = connected_operators[
-                random.randint(0, len(connected_operators) - 1)]
-            client = get_object_or_404(User, email=self.scope['user'])
-            async_to_sync(self.channel_layer.group_send)(
-                'listener',
-                {
-                    'type': 'listener_data',
-                    'available': 'true',
-                    'operator': {
-                        'id': operator.id,
-                        'fullname': operator.full_name,
-                        'email': operator.email,
-                        'chat_id': client.id,
-                    },
-                    'client': {
-                        'id': client.id,
-                        'fullname': client.full_name,
-                        'email': client.email,
-                        'phone': client.phone,
-                        'chat_id': client.id,
-                    }
-                }
-            )
-
-    # receive data from group
-    def listener_data(self, event):
-        available = event['available']
-        if available == 'false':
-            self.send(text_data=json.dumps({
-                'available': 'false',
-                'endpoint': event['source'],
-            }))
-        elif available == 'true':
-            self.send(text_data=json.dumps({
-                'available': 'true',
-                'operator': {
-                    'id': event['operator']['id'],
-                    'fullname': event['operator']['fullname'],
-                    'email': event['operator']['email'],
-                    'chat_id': event['operator']['chat_id'],
-                },
-                'client': {
-                    'id': event['client']['id'],
-                    'fullname': event['client']['fullname'],
-                    'email': event['client']['email'],
-                    'phone': event['client']['phone'],
-                    'chat_id': event['client']['chat_id'],
-                }
-            }))
+        logger.info(logstr + 'Activator is disconnecting: ' + self.scope[
+            'user'].email)
+        set_connection(self.scope['user'].email, False)
 
 
 class ChatHandler(WebsocketConsumer):
     def connect(self):
-        # gets the chat_id from routing.py
-        # self.scope['url_route']['kwargs']['chat_id']
-
-        self.chat_group_name = self.scope['url_route']['kwargs']['chat_id']
-
         async_to_sync(self.channel_layer.group_add)(
-            self.chat_group_name,
-            self.channel_name,
+            'chat',  # group name
+            self.channel_name
         )
         self.accept()
+        logger.info(logstr + 'The ChatHandler connected.')
 
     def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(
-            self.chat_group_name,
-            self.channel_name,
-        )
+        user_email = self.scope['user'].email
 
-    def receive(self, text_data=None, bytes_data=None):
-        data = json.loads(text_data)
         async_to_sync(self.channel_layer.group_send)(
-            self.chat_group_name,
+            'chat',
             {
-                'type': 'chat_message',
-                'source': data['source'],
-                'endpoint': data['endpoint'],
-                'message': data['message'],
+                'type': 'chat_close',
+                'endpoint_email': user_email,
             }
         )
 
+        async_to_sync(self.channel_layer.group_discard)(
+            'chat',
+            self.channel_name
+        )
+        logger.info(
+            logstr + 'The ChatHandler for ' + user_email + ' disconnected.')
+
+    def receive(self, text_data=None, bytes_data=None):
+        data = json.loads(text_data)
+
+        logger.info(
+            logstr + 'The ChatHandler received data from ' + self.scope[
+                'user'].email + ' WebSocket')
+        logger.info(logstr + 'Data received: \n' + json.dumps(data, indent=2))
+
+        # only the client sends 'init' type requests
+        if data['action'] == 'init':
+            connected_operators = User.objects.filter(is_connected=True)
+            if connected_operators:
+                operator = connected_operators[
+                    random.randint(0, len(connected_operators) - 1)]
+                async_to_sync(self.channel_layer.group_send)(
+                    'chat',
+                    {
+                        'type': 'chat_init',
+                        'source': data['source'],
+                        'endpoint': {
+                            'email': operator.email,
+                            'full_name': operator.full_name,
+                        },
+                    }
+                )
+            else:
+                async_to_sync(self.channel_layer.group_send)(
+                    'chat',
+                    {
+                        'type': 'chat_unavailable',
+                        'source': data['source'],
+                    }
+                )
+        elif data['action'] == 'message':
+            async_to_sync(self.channel_layer.group_send)(
+                'chat',
+                {
+                    'type': 'chat_message',
+                    'source': data['source'],
+                    'endpoint': data['endpoint'],
+                    'message': data['message'],
+                }
+            )
+        elif data['action'] == 'close':
+            async_to_sync(self.channel_layer.group_send)(
+                'chat',
+                {
+                    'type': 'chat_close',
+                    'endpoint_email': data['endpoint_email'],
+                }
+            )
+
+    def chat_init(self, event):
+        data_to_send = json.dumps({
+            'action': 'init',
+            'source': event['source'],
+            'endpoint': event['endpoint']
+
+        }, indent=2)
+
+        logger.info(logstr + 'Data sent: \n' + data_to_send)
+
+        self.send(text_data=data_to_send)
+
+    def chat_unavailable(self, event):
+        data_to_send = json.dumps({
+            'action': 'unavailable',
+            'source': event['source'],
+
+        }, indent=2)
+
+        logger.info(logstr + 'Data sent: \n' + data_to_send)
+
+        self.send(text_data=data_to_send)
+
     def chat_message(self, event):
-        self.send(text_data=json.dumps({
+        data_to_send = json.dumps({
+            'action': 'message',
             'source': event['source'],
             'endpoint': event['endpoint'],
             'message': event['message'],
-        }))
+        }, indent=2)
+
+        logger.info(logstr + 'Data sent: \n' + data_to_send)
+
+        self.send(text_data=data_to_send)
+
+    def chat_close(self, event):
+        data_to_send = json.dumps({
+            'action': 'close',
+            'endpoint_email': event['endpoint_email']
+        }, indent=2)
+
+        logger.info(logstr + 'Data sent: \n' + data_to_send)
+
+        self.send(text_data=data_to_send)

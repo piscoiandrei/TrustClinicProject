@@ -23,9 +23,9 @@
                                 </span>
                 </div>
                 <div class="col-6">
-                                <span class="txt-md text-left" id="emailSpan">
-                                    operator email
-                                </span>
+                    <span class="txt-md text-left" id="emailSpan">
+                        operator email
+                    </span>
                 </div>
             </div>
         </div>
@@ -41,7 +41,8 @@
 
     </div>
 
-    <span id="id" style="display:none;">{{ user.id }}</span>
+    <span id="email" style="display:none;">{{ user.email }}</span>
+    <span id="full_name" style="display:none;">{{ user.full_name }}</span>
     {% include 'footer.html' %}
     <script src="{% static 'chat/js/client.js' %}"></script>
     {% include 'script_links.html' %}
