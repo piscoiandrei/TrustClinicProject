@@ -25,7 +25,7 @@ def _redirect(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', _redirect),
+    path('', _redirect, name="_redirect"),
     path('visitor/', include('visitor.urls')),
     path('accounts/', include('accounts.urls')),
     path('chat/', include('chat.urls')),
