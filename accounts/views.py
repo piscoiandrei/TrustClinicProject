@@ -3,7 +3,6 @@ from django.shortcuts import render, resolve_url
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model, \
     login as auth_login
 
@@ -17,7 +16,7 @@ class Login(LoginView):
         if user.is_authenticated:
             if user.is_operator:
                 return redirect(
-                    reverse_lazy('chat:operator', kwargs={'pk': user.id}))
+                    reverse_lazy('chat:operator_session'))
             if user.is_doctor:
                 return redirect(
                     reverse_lazy('doctor:dashboard'))

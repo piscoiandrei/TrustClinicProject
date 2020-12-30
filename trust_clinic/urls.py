@@ -7,11 +7,10 @@ from django.urls import path, include, reverse_lazy
 
 def _redirect(request):
     user = request.user
-
     if user.is_authenticated:
         if user.is_operator:
             return redirect(
-                reverse_lazy('chat:operator', kwargs={'pk': user.id}))
+                reverse_lazy('chat:operator_session'))
         if user.is_doctor:
             return redirect(
                 reverse_lazy('doctor:dashboard'))

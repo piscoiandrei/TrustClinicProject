@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.template.response import TemplateResponse
 from django.http import HttpResponse
 
 
 def dashboard(request):
-    return HttpResponse('client dahboard view')
+    return TemplateResponse(request, 'client/dashboard.html', {})
