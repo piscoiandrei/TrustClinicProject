@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'doctor',
 
     # installed
+    'crispy_forms',
     'bootstrap_admin',
     'channels',
 
@@ -134,11 +135,23 @@ LOGGING = {
 IGNORE_URL_NAMES = [
     'visitor:home',
 ]
-LOGIN_REDIRECT_URL = '/accounts/home/'
+LOGIN_REDIRECT_URL = 'accounts/login/'
 LOGIN_URL = 'accounts/login/'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# SMTP CONFIG
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'django.email.service@gmail.com'
+EMAIL_HOST_PASSWORD = 'ed6d37c1eab39ada'

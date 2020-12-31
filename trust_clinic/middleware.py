@@ -20,4 +20,5 @@ class LoginRequired(MiddlewareMixin):
     Middleware for denying  user access to all pages except the ones from
     visitor namespace, extra functionality is subject to change
     """
+    # todo the login middleware should restrict access based on roles aswell
     pass

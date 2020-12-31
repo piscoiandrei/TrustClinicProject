@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm"
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm"
      style="z-index: 10;">
     <div class="container">
         <a class="navbar-brand" href="{% url 'client:dashboard' %}">
@@ -28,8 +28,12 @@
                 <a class="nav-link active border-right" href="">
                     <span class="hover-blue">Clinics</span>
                 </a>
+                <a class="nav-link active border-right"
+                   href="{% url 'chat:client_session' %}">
+                    <span class="hover-blue">Chat</span>
+                </a>
                 <a class="nav-link active border-right" href="">
-                    <span class="hover-blue">My Appointments</span>
+                    <span class="hover-blue">Appointments</span>
                 </a>
 
                 <div class="nav-item dropdown">
@@ -37,14 +41,20 @@
                        id="navbarDropdownMenuLink" role="button"
                        data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false">
-                        <span class="hover-blue">My Account</span>
+                        <span class="hover-blue">Account</span>
                     </a>
                     <div class="dropdown-menu"
                          aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Edit Profile</a>
-                        <a class="dropdown-item" href="#">Change Password</a>
+                        <a class="dropdown-item"
+                           href="{% url 'accounts:edit_profile' pk=user.id %}">Edit
+                            Profile</a>
+                        <a class="dropdown-item"
+                           href="{% url 'accounts:change_password' %}">
+                            Change Password
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Log out</a>
+                        <a class="dropdown-item"
+                           href="{% url 'accounts:logout' %}">Log out</a>
                     </div>
                 </div>
 
