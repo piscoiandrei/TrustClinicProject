@@ -8,11 +8,17 @@
     <div class="container-fluid" style="max-width: 1580px!important;">
         <div class="row">
             <div class="col-3 border"
-                 style="height: 98vh; overflow-y: auto;" id="left-col">
-                <div class="border-bottom pt-3">
-                    <span class="txt-md text-left">
+                 style="height: 96vh; overflow-y: auto;" id="left-col">
+                <div class="row border-bottom pt-3 ">
+                    <div class="col-8 txt-md text-left">
                         Active Chats
-                    </span>
+                    </div>
+                    <div class="col-4 text-right">
+                        <a class="text-danger"
+                           href="{% url 'accounts:logout' %}">
+                            Exit
+                        </a>
+                    </div>
                 </div>
                 <!-- message boxes will be added here by the js-->
             </div>
@@ -34,7 +40,7 @@
                     </div>
                     <!-- the chat box -->
                     <div class="container bg-white border shadow"
-                         style="height: 90vh; overflow-y: auto;" id="chatBox">
+                         style="height: 88vh; overflow-y: auto;" id="chatBox">
                         <!-- Messages-->
                     </div>
 
@@ -51,8 +57,6 @@
             </div>
         </div>
     </div>
-    <!-- todo logoout view-->
-    <p class="txt-xl ml-5"> add a logout view, which redirects to login</p>
     <span id="email" style="display:none;">{{ user.email }}</span>
     <span id="full_name" style="display:none;">{{ user.full_name }}</span>
     {% include 'copyright.html' %}
