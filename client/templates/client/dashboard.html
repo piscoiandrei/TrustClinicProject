@@ -5,11 +5,69 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container bg-info" style="height:900px; z-index:100;">
-        <div class="row">
-            <div class="col-12">
+    {% load static %}
+    <div class="shadow-sm" style="z-index: 9;">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <p class="txt-lg pt-0 pt-sm-0 pt-md-3 pt-lg-4 pt-xl-5 font-weight-bold">
+                        Hi {{ user.first_name }},
+                    </p>
+                    <p class="txt-lg pt-0 pt-sm-0 pt-md-3 pt-lg-4 pt-xl-5">
+                        We are happy to see you here!
+                    </p>
+                </div>
+                <div class="col-8">
+                    <img src="{% static 'images/docxray_cmp.jpg' %}"
+                         class="img-fluid" alt="smiling doctor"
+                         style="max-height: 500px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="shadow-sm" style="z-index: 8;">
+        <div class="container">
+            <div class="row text-center pt-5 pb-2">
+                <div class="col-12 txt-xl font-weight-bold">
+                    <a href="#" style="color:black">
+                        Our Specializations
+                    </a>
+                </div>
+            </div>
+            <div class="row pt-5 pb-5">
+                {% for s in specializations %}
+
+                    <a class="col-3 m-auto text-center" style="color:black">
+                        <img class="img-fluid" alt="{{ s.name }}"
+                             src="{{ s.picture.url }}"
+                             style="width: 65px">
+
+                        <p class="txt-lg">{{ s.name }}</p>
+                    </a>
+
+                {% endfor %}
+            </div>
+            <div class="row pt-2 pb-5">
+                <div class="col-12">
+                    <a class="btn btn-outline-primary btn-block shawdow-sm mx-auto"
+                       style="max-width:28rem;">
+                        <span class="txt-lg">Check Out More</span>
+                        <i class="fas fa-angle-double-right txt-md ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="shadow-sm" style="z-index: 9;">
+        <div class="container">
+            <div class="row pt-5">
+
+                <a class="text-center m-5"><div class="bg-primary" style="width:160px;height:160px"></div><span>Doctor Name-fwe</span><p>Specialisuwqdfe</p></a>
 
             </div>
         </div>
     </div>
+
 {% endblock %}

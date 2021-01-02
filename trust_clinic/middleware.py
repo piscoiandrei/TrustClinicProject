@@ -8,10 +8,14 @@ from generic.models import FooterData
 class FooterDynamicData(MiddlewareMixin):
 
     def process_template_response(self, request, response):
-        f = FooterData.objects.values()[0]
-        response.context_data['main_phone'] = f['phone']
-        response.context_data['company_email'] = f['company_email']
-        response.context_data['creator_link'] = f['creator_link']
+        if 'admin' not in request.path:
+            data = FooterData.objects.all()
+            if data:
+                f = data.values()[0]
+                response.context_data['main_phone'] = f['phone']
+                response.context_data['company_email'] = f['company_email']
+                response.context_data['creator_link'] = f['creator_link']
+
         return response
 
 

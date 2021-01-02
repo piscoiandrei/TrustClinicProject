@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin, AdminPasswordChangeForm
-
+from .models import DoctorProfile
 from .forms import UserAdminChangeForm, UserAdminCreationForm
 
 User = get_user_model()
@@ -52,4 +52,36 @@ class UserAdminCustom(UserAdmin):
     )
 
 
+class DoctorProfileAdmin(admin.ModelAdmin):
+    model = DoctorProfile
+    search_fields = ('get_full_name', 'get_email', 'specialization')
+    list_display = ('get_full_name', 'get_email', 'specialization')
+    ordering = ('specialization',)
+    fieldsets = (
+        ('Base User', {
+            'fields': ('user',)
+        }),
+        ('Clinic', {
+            'fields': ('clinic',)
+        }),
+        ('Specialization', {
+            'fields': ('specialization',)
+        }),
+        ('Description & Picture', {
+            'fields': ('description', 'picture')
+        })
+    )
+
+    def get_full_name(self, obj):
+        return obj.user.full_name
+
+    get_full_name.short_description = "Full Name"
+
+    def get_email(self, obj):
+        return obj.user.email
+
+    get_email.short_description = "Email"
+
+
+admin.site.register(DoctorProfile, DoctorProfileAdmin)
 admin.site.register(User, UserAdminCustom)

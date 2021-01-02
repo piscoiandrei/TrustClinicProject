@@ -31,4 +31,5 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('doctor/', include('doctor.urls')),
     path('client/', include('client.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+              static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

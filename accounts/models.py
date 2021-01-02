@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
 from .validators import personal_id_validator, phone_validator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from generic.models import Specialization, Clinic
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -91,3 +94,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+
+@receiver(post_save, sender=User, dispatch_uid="create_doctor_profile")
+def create_doctor_profile(sender, instance, **kwargs):
+    if instance.is_doctor:
+        DoctorProfile.objects.create(user=instance)
+
+
+class DoctorProfile(models.Model):
+    description = models.CharField(max_length=4000, null=True, blank=True)
+    picture = models.ImageField(help_text="1:1 aspect ratio required.",
+                                null=True, blank=True)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, null=True,
+                               blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    specialization = models.ForeignKey(Specialization,
+                                       on_delete=models.SET_NULL,
+                                       null=True, blank=True)

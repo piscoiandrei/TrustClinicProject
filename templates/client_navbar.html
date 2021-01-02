@@ -19,29 +19,35 @@
         </button>
         <div class="collapse navbar-collapse txt-md" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-link active border-right" href="">
-                    <span class="hover-blue">Doctors</span>
+                <a class="nav-link active border-right" href=""
+                    title="Our Doctors">
+                    <i class="fas fa-user-md fa-2x text-primary"></i>
                 </a>
-                <a class="nav-link active border-right" href="">
-                    <span class="hover-blue">Services</span>
+                <a class="nav-link active border-right" href=""
+                    title="Specializations">
+                    <i class="fas fa-microscope fa-2x text-primary"></i>
                 </a>
-                <a class="nav-link active border-right" href="">
-                    <span class="hover-blue">Clinics</span>
+                <a class="nav-link active border-right" href=""
+                    title="Our Clinics">
+                    <i class="far fa-hospital fa-2x text-primary"></i>
                 </a>
                 <a class="nav-link active border-right"
-                   href="{% url 'chat:client_session' %}">
-                    <span class="hover-blue">Chat</span>
+                   href="{% url 'chat:client_session' %}"
+                   title="Chat Support">
+                    <i class="fas fa-comment-medical fa-2x text-primary"></i>
                 </a>
-                <a class="nav-link active border-right" href="">
-                    <span class="hover-blue">Appointments</span>
+                <a class="nav-link active border-right" href=""
+                   title="Appointments">
+                    <i class="far fa-calendar-alt fa-2x text-primary"></i>
                 </a>
 
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle active" href="#"
                        id="navbarDropdownMenuLink" role="button"
                        data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        <span class="hover-blue">Account</span>
+                       aria-expanded="false"
+                        title="My Account">
+                        <i class="fas fa-user-cog fa-2x text-primary"></i>
                     </a>
                     <div class="dropdown-menu"
                          aria-labelledby="navbarDropdownMenuLink">
