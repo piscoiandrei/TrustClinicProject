@@ -1,0 +1,109 @@
+{% extends 'client/base.html' %}
+
+{% block head %}
+    <title>Dr. {{ user.last_name }} | T.C.</title>
+{% endblock %}
+
+{% block body %}
+    <div class="bg-blue">
+        <div class="container">
+            <div class="row p-5 text-center">
+                <div class="col-12">
+                    <span class="txt-xl font-weight-bold text-white">
+                        Dr. {{ user.full_name }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row pt-5">
+            <img src="{{ profile.picture.url }}"
+                 class="img-thumbnail mx-auto"
+                 alt="{{ user.full_name }}">
+        </div>
+        <div class="row pt-3">
+            <a class="btn btn-primary text-white shadow-sm mx-auto"
+               href="tel:{{ user.phone }}">
+                <i class="fas fa-phone txt-md"></i>
+                <span class="txt-lg">{{ user.phone }}</span>
+            </a>
+        </div>
+        <div class="row pt-3">
+            <!--todo redirect to appointment page-->
+            <a class="btn btn-danger text-white shadow-sm mx-auto">
+                <i class="far fa-calendar-alt txt-md"></i>
+                <span class="txt-lg">Schedule</span>
+            </a>
+        </div>
+        <hr>
+        <div class="row pt-3">
+            <div class="col-12 text-left">
+                <span class="txt-lg">About me:</span>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col-12">
+                <p class="txt-md">
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ profile.description }}
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class="row pt-3">
+            <div class="col-12 text-center">
+                <span class="txt-lg">Practice Area:</span>
+            </div>
+        </div>
+        <div class="row p-5">
+            <div class="mx-auto">
+                {% if profile.specialization.picture %}
+                    <a class="text-dark"
+                       href="{% url 'client:specialization_detail' profile.specialization.id %}">
+                        <img class="img-fluid mx-auto"
+                             alt="{{ profile.specialization.name }}"
+                             src="{{ profile.specialization.picture.url }}"
+                             style="width: 65px">
+                        <span class="txt-lg ml-1">{{ profile.specialization.name }}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="row pt-3">
+            <div class="col-12 text-center">
+                <span class="txt-lg">Clinic:</span>
+            </div>
+        </div>
+        {% if clinic.picture %}
+            <div class="row my-5">
+                <div class="card mx-auto"
+                     style="width: 500px; height:200px">
+                    <div class="row no-gutters">
+                        <div class="col-5">
+                            <img class="card-img"
+                                 src="{{ clinic.picture.url }}"
+                                 alt="clinic-pic"
+                                 style="max-height:200px">
+                        </div>
+                        <div class="col-7">
+                            <div class="card-body">
+                                    <span class="card-title txt-lg">
+                                        {{ clinic.name }}
+                                    </span>
+                                <p class="card-text txt-md">
+                                    {{ clinic.address }}
+                                </p>
+                                <a href="{% url 'client:clinic_detail' clinic.id %}"
+                                   class="btn btn-outline-danger">
+                                    <i class="fas fa-info-circle"></i>
+                                    More Info
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

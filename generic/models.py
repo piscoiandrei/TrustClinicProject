@@ -5,6 +5,7 @@ from .validators import phone_validator
 class Specialization(models.Model):
     name = models.CharField(max_length=255)
     picture = models.ImageField(help_text="1:1 aspect ratio required.",
+                                default='static/images/default.png',
                                 null=True, blank=True)
 
     def __str__(self):
@@ -16,6 +17,7 @@ class Clinic(models.Model):
     description = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     picture = models.ImageField(help_text="1:1 aspect ratio required.",
+                                default='static/images/default.png',
                                 null=True, blank=True)
     phone = models.CharField(max_length=27,
                              validators=[phone_validator],

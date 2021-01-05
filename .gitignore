@@ -2,3 +2,4 @@
 staticfiles/**
 vcs.xml
 generic.json
+media_root

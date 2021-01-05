@@ -1,0 +1,41 @@
+{% extends 'client/base.html' %}
+
+{% block head %}
+    <title>Doctors | T.C</title>
+{% endblock %}
+
+{% block body %}
+    <div class="bg-primary shadow-sm">
+        <div class="container">
+            <div class="row text-center p-5">
+                <div class="col-12">
+                    <span class="txt-xl font-weight-bold text-white">
+                        Our Doctors
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row ml-5">
+            {% for user, profile in data %}
+                <a class="text-center m-5"
+                   href="{% url 'client:doctor_detail' user.id profile.id %}">
+                    <div>
+                        {% if profile.picture %}
+                            <img src="{{ profile.picture.url }}"
+                                 class="img-thumbnail"
+                                 alt="{{ user.full_name }}">
+                        {% endif %}
+                    </div>
+                    <span class="txt-md font-weight-bold text-dark">
+                        {{ user.full_name }}
+                    </span>
+                    <p class="txt-md text-dark">
+                        {{ profile.specialization.name }}
+                    </p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

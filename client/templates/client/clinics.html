@@ -1,0 +1,41 @@
+{% extends 'client/base.html' %}
+
+{% block head %}
+    <title>Clinics | T.C.</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for clinic in clinics %}
+            {% if clinic.picture %}
+                <div class="row my-5">
+                    <div class="card mx-auto"
+                         style="width: 500px; height:200px">
+                        <div class="row no-gutters">
+                            <div class="col-5">
+                                <img class="card-img" src="{{ clinic.picture.url }}"
+                                     alt="clinic-pic"
+                                     style="max-height:200px">
+                            </div>
+                            <div class="col-7">
+                                <div class="card-body">
+                                    <span class="card-title txt-lg">
+                                        {{ clinic.name }}
+                                    </span>
+                                    <p class="card-text txt-md">
+                                        {{ clinic.address }}
+                                    </p>
+                                    <a href="{% url 'client:clinic_detail' clinic.id %}"
+                                       class="btn btn-outline-danger">
+                                        <i class="fas fa-info-circle"></i>
+                                        More Info
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

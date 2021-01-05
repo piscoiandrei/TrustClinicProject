@@ -6,9 +6,9 @@ class UserManager(BaseUserManager):
 
     # Creates and saves a User with the given data.
     def create_user(self,
-                    first_name,
-                    last_name,
-                    phone,
+                    first_name=None,
+                    last_name=None,
+                    phone=None,
                     email=None,
                     password=None,
                     personal_id=None):
@@ -35,9 +35,9 @@ class UserManager(BaseUserManager):
 
     # Creates and saves a staff user with the given
     def create_staffuser(self,
-                         first_name,
-                         last_name,
-                         phone,
+                         first_name=None,
+                         last_name=None,
+                         phone=None,
                          email=None,
                          password=None,
                          personal_id=None):
@@ -73,9 +73,9 @@ class UserManager(BaseUserManager):
 
     # Creates and saves a client user with the given data.
     def create_client(self,
-                      first_name,
-                      last_name,
-                      phone,
+                      first_name=None,
+                      last_name=None,
+                      phone=None,
                       email=None,
                       password=None,
                       personal_id=None):
@@ -93,9 +93,9 @@ class UserManager(BaseUserManager):
 
     # Creates and saves an operator user with the given data.
     def create_operator(self,
-                        first_name,
-                        last_name,
-                        phone,
+                        first_name=None,
+                        last_name=None,
+                        phone=None,
                         email=None,
                         password=None,
                         personal_id=None):
@@ -114,9 +114,9 @@ class UserManager(BaseUserManager):
 
     # Creates and saves a doctor user with the given data.
     def create_doctor(self,
-                      first_name,
-                      last_name,
-                      phone,
+                      first_name=None,
+                      last_name=None,
+                      phone=None,
                       email=None,
                       password=None,
                       personal_id=None):

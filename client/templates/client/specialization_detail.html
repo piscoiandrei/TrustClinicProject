@@ -1,0 +1,94 @@
+{% extends 'client/base.html' %}
+
+{% block head %}
+    <title>{{ specialization.name }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row pt-5">
+            <a class="m-auto text-center" style="color:black"
+               href="{% url 'client:specialization_detail' specialization.id %}">
+                <img class="img-fluid" alt="{{ specialization.name }}"
+                     src="{{ specialization.picture.url }}"
+                     style="width: 65px">
+
+                <p class="txt-xl">{{ specialization.name }}</p>
+            </a>
+        </div>
+    </div>
+    <div class="bg-primary">
+        <div class="container">
+            <div class="row pt-1 pb-1">
+                <p class="txt-xl mx-auto text-white">
+                    Doctors with this practice area:
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row ml-5">
+            {% for user, profile in doctors %}
+                <a class="text-center m-5"
+                   href="{% url 'client:doctor_detail' user.id profile.id %}">
+                    <div>
+                        {% if profile.picture %}
+                            <img src="{{ profile.picture.url }}"
+                                 class="img-thumbnail"
+                                 alt="{{ user.full_name }}">
+                        {% endif %}
+                    </div>
+                    <span class="txt-md font-weight-bold text-dark">
+                        {{ user.full_name }}
+                    </span>
+                    <p class="txt-md text-dark">
+                        {{ profile.specialization.name }}
+                    </p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="bg-primary">
+        <div class="container">
+            <div class="row pt-1 pb-1">
+                <p class="txt-xl mx-auto text-white">
+                    Clinics that offer this service:
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% for clinic in clinics %}
+            {% if clinic.picture %}
+                <div class="row my-5">
+                    <div class="card mx-auto"
+                         style="width: 500px; height:200px">
+                        <div class="row no-gutters">
+                            <div class="col-5">
+                                <img class="card-img"
+                                     src="{{ clinic.picture.url }}"
+                                     alt="clinic-pic"
+                                     style="max-height:200px">
+                            </div>
+                            <div class="col-7">
+                                <div class="card-body">
+                                    <span class="card-title txt-lg">
+                                        {{ clinic.name }}
+                                    </span>
+                                    <p class="card-text txt-md">
+                                        {{ clinic.address }}
+                                    </p>
+                                    <a href="{% url 'client:clinic_detail' clinic.id %}"
+                                       class="btn btn-outline-danger">
+                                        <i class="fas fa-info-circle"></i>
+                                        More Info
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

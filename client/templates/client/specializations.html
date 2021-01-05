@@ -1,0 +1,27 @@
+{% extends 'client/base.html' %}
+
+{% block head %}
+    <title>Specializations | T.C.</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        {% for s in specializations %}
+            {% if s.picture %}
+                <div class="row pt-5">
+                    <a class="m-auto text-center" style="color:black"
+                       href="{% url 'client:specialization_detail' s.id %}">
+                        <img class="img-fluid" alt="{{ s.name }}"
+                             src="{{ s.picture.url }}"
+                             style="width: 65px">
+
+                        <p class="txt-lg">{{ s.name }}</p>
+                    </a>
+                </div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+{% endblock %}

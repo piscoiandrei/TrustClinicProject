@@ -32,6 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # installed
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 MIDDLEWARE = [
@@ -138,7 +141,6 @@ IGNORE_URL_NAMES = [
 LOGIN_REDIRECT_URL = 'accounts/login/'
 LOGIN_URL = 'accounts/login/'
 
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # static and media
@@ -150,7 +152,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
 
 # SMTP CONFIG
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
