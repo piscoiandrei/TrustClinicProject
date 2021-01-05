@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from generic.models import Specialization, Clinic
 from accounts.models import DoctorProfile
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -21,6 +22,27 @@ def dashboard(request):
 
 
 def doctors(request):
+    if 'query' in request.GET:
+        query = request.GET.get('query').split(' ')
+        profiles = list()
+        users = list()
+        for q_item in query:
+            profiles += (DoctorProfile.objects.filter(
+                user__first_name__icontains=q_item))[:]
+            profiles += (DoctorProfile.objects.filter(
+                user__last_name__icontains=q_item))[:]
+            profiles += (DoctorProfile.objects.filter(
+                specialization__name__icontains=q_item))[:]
+            profiles += (DoctorProfile.objects.filter(
+                clinic__name__icontains=q_item))[:]
+
+        unique_profiles = list(set(profiles))
+        for p in unique_profiles:
+            users.append(get_object_or_404(User, pk=p.user.id))
+
+        return TemplateResponse(request, 'client/doctors.html', {
+            'data': zip(users, unique_profiles),
+        })
     profiles = DoctorProfile.objects.all()[:]
     users = list()
     for p in profiles:
@@ -43,6 +65,19 @@ def doctor_detail(request, user_pk, profile_pk):
 
 
 def clinics(request):
+    if 'query' in request.GET:
+        query = request.GET.get('query').split(' ')
+        _clinics = list()
+        for q_item in query:
+            _clinics += Clinic.objects.filter(
+                specializations__name__icontains=q_item)[:]
+            _clinics += Clinic.objects.filter(name__icontains=q_item)[:]
+            _clinics += Clinic.objects.filter(address__icontains=q_item)[:]
+        unique_clinics = list(set(_clinics))
+        return TemplateResponse(request, 'client/clinics.html', {
+            'clinics': unique_clinics,
+        })
+
     _clinics = Clinic.objects.all()
     if _clinics:
         return TemplateResponse(request, 'client/clinics.html', {

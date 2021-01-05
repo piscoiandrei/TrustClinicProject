@@ -5,6 +5,24 @@
 {% endblock %}
 
 {% block body %}
+    <div class="bg-primary shadow-sm">
+        <div class="container">
+            <div class="row text-center pt-5 pb-2">
+                <div class="col-12">
+                    <span class="txt-xl font-weight-bold text-white">
+                        Our Clinics
+                    </span>
+                </div>
+            </div>
+            <div class="row pt-1 pb-3">
+                <form class="w-100 mx-auto" method="get">
+                    <input class="form-control form-control-lg" type="search"
+                           name="query"
+                           placeholder="Search by name, specializations or address">
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="container">
         {% for clinic in clinics %}
             {% if clinic.picture %}
@@ -13,7 +31,8 @@
                          style="width: 500px; height:200px">
                         <div class="row no-gutters">
                             <div class="col-5">
-                                <img class="card-img" src="{{ clinic.picture.url }}"
+                                <img class="card-img"
+                                     src="{{ clinic.picture.url }}"
                                      alt="clinic-pic"
                                      style="max-height:200px">
                             </div>
