@@ -1,1 +1,1 @@
-web: uvicorn asgi.py
+web: gunicorn trust_clinic.wsgi
