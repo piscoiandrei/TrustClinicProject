@@ -1,1 +1,1 @@
-web: gunicorn trust_clinic.wsgi
+web: gunicorn wsgi.py
