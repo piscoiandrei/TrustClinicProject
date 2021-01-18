@@ -1,1 +1,1 @@
-web: gunicorn wsgi.py
+web: uvicorn asgi.py
