@@ -99,7 +99,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 @receiver(post_save, sender=User, dispatch_uid="create_doctor_profile")
 def create_doctor_profile(sender, instance, **kwargs):
     if instance.is_doctor:
-        DoctorProfile.objects.create(user=instance)
+        DoctorProfile.objects.get_or_create(user=instance)
 
 
 class DoctorProfile(models.Model):

@@ -1,0 +1,38 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Working Hours | T.C. </title>
+    {% include 'header_links.html' %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'css/main.css' %}">
+</head>
+<body>
+{% include 'doctor/navbar.html' %}
+<div class="container txt-md">
+    <div class="row mt-5">
+        <div class="mx-auto">
+            <div class="card bg-light mb-3 shadow-sm" style="min-width: 28rem;">
+                <h4 class="card-header txt-lg">
+                    Working Hours
+                </h4>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input type="submit"
+                               class="btn btn-primary btn-block txt-md"
+                               value="Apply Changes">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% include 'copyright.html' %}
+{% include 'script_links.html' %}
+</body>
+</html>

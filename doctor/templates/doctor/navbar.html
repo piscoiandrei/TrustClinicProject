@@ -1,0 +1,33 @@
+{% load static %}
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm"
+     style="z-index: 10;">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'doctor:dashboard' %}">
+            <img src="{% static 'images/LOGO.svg' %}" width="55" height="55"
+                 class="d-inline-block align-top"
+                 alt="" loading="lazy">
+            <span class="logo-text">
+         <span class="hover-blue">TRUST CLINIC</span>
+      </span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="true"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse txt-md" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link active border-right"
+                   href="{% url 'doctor:working_hours' pk=hours_id %}">
+                    Working Hours
+                </a>
+                 <a class="nav-link active"
+                   href="{% url 'accounts:logout' %}">
+                    Log Out
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

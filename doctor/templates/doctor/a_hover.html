@@ -1,10 +1,10 @@
-<div class="card text-dark" style="width: 20rem;">
-    <div class="card-header txt-lg">
-        client.full_name
+<div class="card text-dark shadow" style="width: 24rem;">
+    <div class="card-header txt-md">
+        {{ appointment.client.full_name }}
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item txt-md">Email:</li>
-        <li class="list-group-item txt-md">Phone:</li>
-        <li class="list-group-item txt-md">Personal ID:</li>
+        <li class="list-group-item txt-md">Email: {{ appointment.client.email }}</li>
+        <li class="list-group-item txt-md">Phone: {{ appointment.client.phone }}</li>
+        <li class="list-group-item txt-md">Personal ID: {{ appointment.client.personal_id }}</li>
     </ul>
 </div>

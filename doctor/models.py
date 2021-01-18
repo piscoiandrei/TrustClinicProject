@@ -44,7 +44,7 @@ class DoctorWorkingHours(models.Model):
 @receiver(post_save, sender=DoctorProfile,
           dispatch_uid="create_doctor_schedule")
 def create_doctor_schedule(sender, instance, **kwargs):
-    DoctorWorkingHours.objects.create(doctor_profile=instance)
+    DoctorWorkingHours.objects.get_or_create(doctor_profile=instance)
 
 
 class Appointment(models.Model):
