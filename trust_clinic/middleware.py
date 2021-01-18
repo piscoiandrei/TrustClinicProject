@@ -55,5 +55,7 @@ class LoginRequired(MiddlewareMixin):
                     request.user.is_superuser == False)):
                 return self.redirect_role(request.user)
         else:
+            if path == '/':
+                return redirect('visitor:home')
             if not self.contains_ignored(path):
                 return redirect('accounts:login')
