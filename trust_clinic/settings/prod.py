@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ['https://trustclinic.herokuapp.com/']
+ALLOWED_HOSTS = ['trustclinic.herokuapp.com']
 
 INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic')
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
