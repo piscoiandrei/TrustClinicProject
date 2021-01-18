@@ -46,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'trust_clinic.middleware.FooterDynamicData',
+    'trust_clinic.middleware.LoginRequired',
 ]
 
 ROOT_URLCONF = 'trust_clinic.urls'
@@ -135,8 +136,11 @@ LOGGING = {
     },
 }
 # auth
-IGNORE_URL_NAMES = [
-    'visitor:home',
+IGNORE_LOGIN_REQUIRED = [
+    'visitor',
+    'login',
+    'register',
+    'reset',  # for pw resets and connfirms
 ]
 LOGIN_REDIRECT_URL = 'accounts/login/'
 LOGIN_URL = 'accounts/login/'
