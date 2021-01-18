@@ -1,7 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 staticfiles/**
 vcs.xml
-generic.json
 media_root
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -63,7 +62,6 @@ cover/
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:

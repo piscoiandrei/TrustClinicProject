@@ -6,8 +6,7 @@ import sys
 
 def main():
     # python manage.py commmand --settings=trust_clinic.settings.prod
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                          'trust_clinic.settings.prod')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'trust_clinic.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
