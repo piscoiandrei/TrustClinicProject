@@ -5,11 +5,9 @@ import sys
 
 
 def main():
-    """Run administrative tasks."""
-    # manage.py will use dev settings and not prod
-    # to call use prod settings use:
     # python manage.py commmand --settings=trust_clinic.settings.prod
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'trust_clinic.settings.base')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          'trust_clinic.settings.prod')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
