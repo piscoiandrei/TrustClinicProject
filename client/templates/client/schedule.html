@@ -1,0 +1,128 @@
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% include 'header_links.html' %}
+    <title>Schedule | T.C.</title>
+</head>
+
+<body>
+{% include 'client_navbar.html' %}
+<div class="bg-blue">
+    <div class="container">
+        <div class="row p-5 text-center">
+            <div class="col-12">
+                    <span class="txt-xl font-weight-bold text-white">
+                        Dr. {{ doctor_user.full_name }}
+                    </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row pt-5">
+        <img src="{{ doctor_profile.picture.url }}"
+             class="img-thumbnail mx-auto"
+             alt="{{ doctor_user.full_name }}">
+    </div>
+    <div class="row pt-5">
+        <a class="btn btn-primary text-white shadow-sm mx-auto"
+           href="tel:{{ doctor_user.phone }}">
+            <i class="fas fa-phone txt-md"></i>
+            <span class="txt-lg">{{ doctor_user.phone }}</span>
+        </a>
+    </div>
+    <div class="row pt-5 txt-lg">
+        <p class="mx-auto">Weekly Working Hours</p>
+    </div>
+    <div class="row pt-5">
+        <table class="table table-bordered txt-md">
+            <thead>
+            <tr>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+                <th scope="col">Saturday</th>
+                <th scope="col">Sunday</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ monday }}</td>
+                <td>{{ tuesday }}</td>
+                <td>{{ wednesday }}</td>
+                <td>{{ thursday }}</td>
+                <td>{{ friday }}</td>
+                <td>{{ saturday }}</td>
+                <td>{{ sunday }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row pt-5 txt-lg">
+        <p class="mx-auto">Appointments:</p>
+    </div>
+
+    {% load crispy_forms_tags %}
+
+    <div class="row pt-1 txt-md pb-2">
+        <div class="mx-auto">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ select_date_form|crispy }}
+                <input type="submit"
+                       class="btn btn-primary btn-block txt-md"
+                       name="select_date"
+                       value="Select">
+            </form>
+        </div>
+    </div>
+    {% if current_date %}
+        <div class="row pt-3 txt-md pb-2">
+            <div class="mx-auto">
+                <span class="txt-md"> Current Date:</span>
+                <span id="current_date">{{ current_date }}</span>
+            </div>
+        </div>
+        <div class="row pt-1 txt-md pb-5">
+
+            {% for t,b in appointments %}
+                {% if b  == 'free'%}
+                    <div class="border text-center p-2 schedule-cell"
+                         style="width: 7rem;">
+                        {{ t }}
+                    </div>
+                {% else %}
+                    <div class="border text-center p-2 table-danger"
+                         style="width: 7rem;">
+                        {{ t }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row pt-1 txt-md pb-2">
+        <div class="mx-auto">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ appointment_form|crispy }}
+                <input type="submit"
+                       class="btn btn-primary btn-block txt-md"
+                       name="make_appointment"
+                       value="Make Appointment">
+            </form>
+        </div>
+    </div>
+</div>
+<div style="display: none" id="interval"> {{ interval }}</div>
+
+<script src="{% static 'client/js/schedule.js' %}"></script>
+{% include 'footer.html' %}
+{% include 'script_links.html' %}
+</body>

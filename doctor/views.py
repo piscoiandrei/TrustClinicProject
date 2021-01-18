@@ -1,9 +1,5 @@
-from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.template.response import TemplateResponse
 
 
 def dashboard(request):
-    return HttpResponse('doctor dahboard view')
+    return TemplateResponse(request, 'doctor/dashboard.html', {})

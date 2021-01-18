@@ -1,7 +1,7 @@
 {% extends 'client/base.html' %}
 
 {% block head %}
-    <title>Dr. {{ user.last_name }} | T.C.</title>
+    <title>Dr. {{ doc_user.last_name }} | T.C.</title>
 {% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
             <div class="row p-5 text-center">
                 <div class="col-12">
                     <span class="txt-xl font-weight-bold text-white">
-                        Dr. {{ user.full_name }}
+                        Dr. {{ doc_user.full_name }}
                     </span>
                 </div>
             </div>
@@ -20,18 +20,18 @@
         <div class="row pt-5">
             <img src="{{ profile.picture.url }}"
                  class="img-thumbnail mx-auto"
-                 alt="{{ user.full_name }}">
+                 alt="{{ doc_user.full_name }}">
         </div>
         <div class="row pt-3">
             <a class="btn btn-primary text-white shadow-sm mx-auto"
-               href="tel:{{ user.phone }}">
+               href="tel:{{ doc_user.phone }}">
                 <i class="fas fa-phone txt-md"></i>
-                <span class="txt-lg">{{ user.phone }}</span>
+                <span class="txt-lg">{{ doc_user.phone }}</span>
             </a>
         </div>
         <div class="row pt-3">
-            <!--todo redirect to appointment page-->
-            <a class="btn btn-danger text-white shadow-sm mx-auto">
+            <a class="btn btn-danger text-white shadow-sm mx-auto"
+               href="{% url 'client:schedule' doctor_pk=doc_user.id %}">
                 <i class="far fa-calendar-alt txt-md"></i>
                 <span class="txt-lg">Schedule</span>
             </a>

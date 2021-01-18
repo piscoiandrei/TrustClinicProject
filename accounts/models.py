@@ -105,7 +105,6 @@ def create_doctor_profile(sender, instance, **kwargs):
 class DoctorProfile(models.Model):
     description = models.CharField(max_length=4000, null=True, blank=True)
     picture = models.ImageField(help_text="1:1 aspect ratio required.",
-                                default='static/images/default.png',
                                 null=True, blank=True)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, null=True,
                                blank=True)
@@ -113,3 +112,6 @@ class DoctorProfile(models.Model):
     specialization = models.ForeignKey(Specialization,
                                        on_delete=models.SET_NULL,
                                        null=True, blank=True)
+
+    def __str__(self):
+        return self.user.full_name
