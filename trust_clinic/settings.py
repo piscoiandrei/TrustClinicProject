@@ -139,19 +139,45 @@ LOGGING = {
 }
 # auth
 LOGGED_OUT_ONLY_URLS = [
-
+    '/',
+    'visitor/',
+    'accounts/login/',
+    'accounts/register/',
+    'accounts/password_reset/',
+    'accounts/password_reset/done/',
+    'accounts/reset/',
+    'accounts/reset/done/'
 ]
+# no permissions in order to access these urls
 LOGIN_REQUIRED_URLS = [
-    # the auth urls that are not ignored
+    'accounts/logout/',
 ]
+# specific permissions required to access these urls
 CLIENT_URLS = [
-    # client specific urls
+    'accounts/edit-profile/',
+    'accounts/change-password/',
+    'accounts/change-password-done/',
+    'chat/client/',
+    'client/dashboard/',
+    'client/specializations/',
+    'client/doctors/',
+    'client/doctor/detail/',
+    'client/clinics/',
+    'client/clinics/detail/',
+    'client/schedule/',
+    'client/appointments/',
+    'client/appointment/success/',
+    'client/appointment/delete/confirm/',
+    'client/appointment/delete/',
+    'client/appointment/delete/done/',
 ]
 OPERATOR_URLS = [
-
+    'chat/operator/',
 ]
 DOCTOR_URLS = [
-
+    'doctor/dashboard/',
+    'doctor/appointment/delete/',
+    'doctor/working-hours/',
 ]
 
 LOGIN_REDIRECT_URL = 'accounts/login/'
