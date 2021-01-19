@@ -138,12 +138,22 @@ LOGGING = {
     },
 }
 # auth
-IGNORE_LOGIN_REQUIRED = [
-    'visitor',
-    'login',
-    'register',
-    'reset',  # for pw resets and connfirms
+LOGGED_OUT_ONLY_URLS = [
+
 ]
+LOGIN_REQUIRED_URLS = [
+    # the auth urls that are not ignored
+]
+CLIENT_URLS = [
+    # client specific urls
+]
+OPERATOR_URLS = [
+
+]
+DOCTOR_URLS = [
+
+]
+
 LOGIN_REDIRECT_URL = 'accounts/login/'
 LOGIN_URL = 'accounts/login/'
 
