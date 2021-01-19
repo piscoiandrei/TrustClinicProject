@@ -179,10 +179,6 @@ LOGIN_URL = 'accounts/login/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# static and media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
-MEDIA_URL = '/media/'
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
