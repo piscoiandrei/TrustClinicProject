@@ -51,7 +51,7 @@ class LoginRequired(MiddlewareMixin):
                 return self.redirect_role(request.user)
             elif ('doctor' in path) and (request.user.is_doctor == False):
                 return self.redirect_role(request.user)
-            elif ('operator' in path) and ((request.user.is_staff == False) or (
+            elif ('admin' in path) and ((request.user.is_staff == False) or (
                     request.user.is_superuser == False)):
                 return self.redirect_role(request.user)
         else:
