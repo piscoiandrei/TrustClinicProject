@@ -153,6 +153,7 @@ CLIENT_URLS = [
     'chat/client/',
     'client/dashboard/',
     'client/specializations/',
+    'client/specialization/detail/',
     'client/doctors/',
     'client/doctor/detail/',
     'client/clinics/',
