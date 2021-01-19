@@ -13,6 +13,7 @@ ALLOWED_HOSTS = ['trustclinic.herokuapp.com']
 
 INSTALLED_APPS = [
     # installed
+    'channels',
     'whitenoise.runserver_nostatic',
 
     # my apps
@@ -26,7 +27,6 @@ INSTALLED_APPS = [
     # installed
     'crispy_forms',
     'bootstrap_admin',
-    'channels',
 
     # default
     'django.contrib.admin',
