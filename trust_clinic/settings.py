@@ -132,7 +132,6 @@ LOGGING = {
 }
 # auth
 LOGGED_OUT_ONLY_URLS = [
-    '/',
     'visitor/',
     'accounts/login/',
     'accounts/register/',

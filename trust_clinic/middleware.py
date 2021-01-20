@@ -56,6 +56,8 @@ class LoginRequired(MiddlewareMixin):
             if not self.match_path(path=path,
                                    urls=settings.LOGGED_OUT_ONLY_URLS):
                 return redirect('visitor:home')
+            if path == '/':
+                return redirect('visitor:home')
 
         if user.is_authenticated:
             if self.match_path(path=path, urls=settings.LOGGED_OUT_ONLY_URLS):
