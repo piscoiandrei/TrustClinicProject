@@ -1,19 +1,17 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
-from django.urls import reverse_lazy
 from .models import Appointment
 from accounts.models import DoctorProfile
-from django.views.generic.edit import UpdateView
 from .models import DoctorWorkingHours
 from .forms import DoctorWorkingHoursForm
+from datetime import datetime
 
 
 def dashboard(request):
     context = {
         'appointments': Appointment.objects.filter(
-            doctor_profile=get_object_or_404(DoctorProfile,
-                                             user=request.user)).order_by(
-            'start'),
+            doctor_profile=get_object_or_404(DoctorProfile, user=request.user),
+            start__lte=datetime.now()).order_by('start'),
         'hours_id': get_object_or_404(DoctorWorkingHours,
                                       doctor_profile=get_object_or_404(
                                           DoctorProfile, user=request.user)).id
