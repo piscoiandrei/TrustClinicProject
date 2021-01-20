@@ -11,7 +11,7 @@ def dashboard(request):
     context = {
         'appointments': Appointment.objects.filter(
             doctor_profile=get_object_or_404(DoctorProfile, user=request.user),
-            start__lte=datetime.now()).order_by('start'),
+            start__gte=datetime.now()).order_by('start'),
         'hours_id': get_object_or_404(DoctorWorkingHours,
                                       doctor_profile=get_object_or_404(
                                           DoctorProfile, user=request.user)).id

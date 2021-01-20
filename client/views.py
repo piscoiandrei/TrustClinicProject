@@ -310,7 +310,7 @@ def schedule(request, doctor_pk):
 def appointments(request, client_pk):
     aps = Appointment.objects.filter(
         client=get_object_or_404(User, pk=client_pk),
-        start__lte=datetime.now()).order_by('start')
+        start__gte=datetime.now()).order_by('start')
     context = {
         'appointments': aps,
     }
