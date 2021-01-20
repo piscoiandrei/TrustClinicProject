@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'trust_clinic.middleware.FooterDynamicData',
-    'trust_clinic.middleware.LoginRequired',
+   # 'trust_clinic.middleware.LoginRequired',
 ]
 
 ROOT_URLCONF = 'trust_clinic.urls'
