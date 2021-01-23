@@ -30,7 +30,7 @@ const closingTags = '</p></div></div></div>';
  ACTIVATOR Websocket
  */
 let activator = new WebSocket(
-    'wss://' + window.location.host + '/wss/chat/activator/'
+    'wss://' + window.location.host + '/ws/chat/activator/'
 );
 activator.addEventListener('error', activatorErrorHandler);
 activator.addEventListener('close', activatorClose);
@@ -56,7 +56,7 @@ Chat Handler
  */
 
 chatHandler = new WebSocket(
-    'wss://' + window.location.host + '/wss/chat/'
+    'wss://' + window.location.host + '/ws/chat/'
 );
 p('Chat handler: ', chatHandler);
 chatHandler.addEventListener('message', listenChat);
