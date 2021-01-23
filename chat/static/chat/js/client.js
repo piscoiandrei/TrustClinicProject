@@ -22,7 +22,7 @@ const closingTags = '</p></div></div></div>';
 Chat Handler
  */
 chatHandler = new WebSocket(
-    'ws://' + window.location.host + '/ws/chat/'
+    'wss://' + window.location.host + '/wss/chat/'
 );
 p('Chat handler: ', chatHandler)
 chatHandler.addEventListener('open', startChat);

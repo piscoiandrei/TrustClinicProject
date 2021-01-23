@@ -30,25 +30,25 @@ const closingTags = '</p></div></div></div>';
  ACTIVATOR Websocket
  */
 let activator = new WebSocket(
-    'ws://' + window.location.host + '/ws/chat/activator/'
+    'wss://' + window.location.host + '/wss/chat/activator/'
 );
 activator.addEventListener('error', activatorErrorHandler);
 activator.addEventListener('close', activatorClose);
 activator.addEventListener('open', activatorOpen);
 
 function activatorOpen(e) {
-    console.log('The activator ws just opened');
+    console.log('The activator wss just opened');
 }
 
 function activatorClose(e) {
-    console.log('The activator ws just closed');
+    console.log('The activator wss just closed');
 }
 
 function activatorErrorHandler(e) {
     // leave balnk for now
     // ideas:
     //https://stackoverflow.com/questions/3780511/reconnection-of-client-when-server-reboots-in-websocket
-    console.log('an error occured in the activator WS');
+    console.log('an error occured in the activator wss');
 }
 
 /*
@@ -56,7 +56,7 @@ Chat Handler
  */
 
 chatHandler = new WebSocket(
-    'ws://' + window.location.host + '/ws/chat/'
+    'wss://' + window.location.host + '/wss/chat/'
 );
 p('Chat handler: ', chatHandler);
 chatHandler.addEventListener('message', listenChat);
